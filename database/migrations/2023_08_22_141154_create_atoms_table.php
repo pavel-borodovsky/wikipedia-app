@@ -22,7 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('atom_id');
             $table->unsignedBigInteger('article_id');
             $table->unsignedInteger('occurrences');
-            $table->timestamps();
 
             $table->foreign('atom_id')->references('id')->on('atoms')->onDelete('cascade');
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');

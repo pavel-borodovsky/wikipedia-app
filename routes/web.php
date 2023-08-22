@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
+use App\Models\Article;
+use App\Http\Controllers\WikipediaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $articles = Article::latest()->get();
+    return view('articles', compact('articles'));
 });
+
+Route::post('/import', [WikipediaController::class, 'importArticles'])->name('import');
+Route::post('/search', [WikipediaController::class, 'searchArticles'])->name('search');
+Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');

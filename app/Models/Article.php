@@ -11,6 +11,6 @@ class Article extends Model
 
     public function atoms()
     {
-        return $this->belongsToMany(Atom::class)->withPivot('occurrences');
+        return $this->belongsToMany(Atom::class, 'atom_article')->withPivot('occurrences');
     }
 }
