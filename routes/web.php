@@ -16,11 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    $articles = Article::latest()->get();
-    return view('articles', compact('articles'));
-});
-
+Route::get('/', [ArticleController::class, 'index']);
 Route::post('/import', [WikipediaController::class, 'importArticles'])->name('import');
-Route::post('/search', [WikipediaController::class, 'searchArticles'])->name('search');
+Route::get('/search', [ArticleController::class, 'searchArticles'])->name('search');
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');
