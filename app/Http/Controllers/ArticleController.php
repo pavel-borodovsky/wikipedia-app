@@ -4,19 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Atom;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    /**
+     * Метод, возвращающий все статьи
+     *
+     * @return JsonResponse
+    */
     public function index() {
         $articles = Article::all();
         return response()->json($articles);
     }
+
+    /**
+     * Метод, возвращающий статью по её id
+     *
+     * @param int $id
+     * @return JsonResponse
+     */
     public function show($id) {
         $article = Article::find($id);
         return response()->json($article);
     }
 
+    /**
+     * Метод, выполняющий поиск статей по введенным ключевым словам
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function searchArticles(Request $request)
     {
         if(isset($request->keywords) && !is_null($request->keywords)) {
@@ -41,7 +60,7 @@ class ArticleController extends Controller
                 return ($a['pivot']['occurrences'] > $b['pivot']['occurrences']) ? -1 : 1;
             });
 
-            //при нескольких введенных словах могут быть дубли, но с разными pivot значениями, удалим и
+            //при нескольких введенных словах могут быть дубли, но с разными pivot значениями, удалим их
             $uniqueIds = []; //массив уникальных id
             $uniqueArticles = []; //массив уникальных статей
             foreach ($articles as $article) {

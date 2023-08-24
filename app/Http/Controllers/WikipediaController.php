@@ -4,19 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Atom;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class WikipediaController extends Controller
 {
+    /**
+     * Метод, импортирующий статьи ru.wikipedia.org в базу данных
+     *
+     * Использует MediaWiki Api. Используемые методы Api:
+     * https://ru.wikipedia.org/w/api.php?action=help&modules=query
+     * https://ru.wikipedia.org/w/api.php?action=help&modules=query%2Bsearch
+     * https://ru.wikipedia.org/w/api.php?action=help&modules=query%2Bextracts
+     *
+     * @param Request $request
+     * @return JsonResponse
+    */
     public function importArticles(Request $request)
     {
         $keyword = $request->input('keyword');
-        /**
-         * метод query https://ru.wikipedia.org/w/api.php?action=help&modules=query
-         * параметр list=search https://ru.wikipedia.org/w/api.php?action=help&modules=query%2Bsearch
-         * метод по умолчанию возвращает 10 подходящих статей
-         */
+        //метод по умолчанию возвращает 10 подходящих статей
         $response = Http::get('https://ru.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=' . $keyword);
         $data = $response->json();
 
@@ -51,9 +59,15 @@ class WikipediaController extends Controller
 
         }
 
-        return $response->json('message', 'Статья не найдена.');
+        return response()->json('message', 'Статья не найдена.');
     }
 
+    /**
+     * Метод убирает из текста всё, что не является словами, и разбивает текст на слова-атомы
+     *
+     * @param string $content
+     * @return array
+    */
     private function extractAtoms($content)
     {
         $content = preg_replace('/[^\p{L}\p{N}]+/u', ' ', $content); // удаление знаков препинания

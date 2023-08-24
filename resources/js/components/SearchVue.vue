@@ -4,7 +4,7 @@
         <button @click="searchArticles()" type="submit">Найти</button>
         <ul>
             <li v-for="article in articles" :key="article.id" @click="showArticle(article.id)">
-                {{ article.title }}
+                {{ article.title }} (количество вхождений - {{ article.pivot.occurrences}})
             </li>
         </ul>
         <div v-if="selectedArticle">
