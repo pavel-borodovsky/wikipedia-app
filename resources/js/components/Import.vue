@@ -14,7 +14,7 @@
             <tr v-for="article in articles" :key="article.id">
                 <td>{{ article.title }}</td>
                 <td>
-                    <a href="http://ru.wikipedia.org/wiki/{{article.title}}">http://ru.wikipedia.org/wiki/{{ article.title }}</a>
+                    <a :href="article.link" target="_blank">{{ article.title }}</a>
                 </td>
             </tr>
 
