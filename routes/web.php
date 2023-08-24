@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ArticleController::class, 'index']);
+Route::get('/', function () {
+    return view('home');
+});
 Route::post('/import', [WikipediaController::class, 'importArticles'])->name('import');
 Route::get('/search', [ArticleController::class, 'searchArticles'])->name('search');
+Route::get('/articles', [ArticleController::class, 'index']);
 Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('article.show');

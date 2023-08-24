@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class ArticleController extends Controller
 {
     public function index() {
-        return view('home', ['articles' => Article::all()]);
+        $articles = Article::all();
+        return response()->json($articles);
     }
     public function show($id) {
         $article = Article::find($id);

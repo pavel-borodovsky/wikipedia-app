@@ -47,11 +47,11 @@ class WikipediaController extends Controller
                     $article->atoms()->attach($atomModel, ['occurrences' => $occurrences]); //добавляем свяь m2m с дополнительным полем кол-ва вхождений
                 }
             }
+            return response()->json(['message' => 'Импорт завершен']);
 
-            return redirect()->back()->with('success', 'Статья была успешно скопирована и добавлена в базу данных.');
         }
 
-        return redirect()->back()->with('error', 'Статья не найдена.');
+        return $response->json('message', 'Статья не найдена.');
     }
 
     private function extractAtoms($content)

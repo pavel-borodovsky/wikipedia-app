@@ -9,44 +9,8 @@
 <a href="#" id="search">Поиск</a>
 <!-- Контент вкладок -->
 <div id="import-tab" style="display: block">
-    <div>
-        <h2>Импорт статьи</h2>
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @elseif(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <form action="{{ route('import') }}" method="POST">
-            @csrf
-            <input type="text" name="keyword" placeholder="Ключевое слово">
-            <button type="submit">Скопировать</button>
-        </form>
-
-    @if(count($articles) > 0)
-        <table>
-            <thead>
-            <th>Заголовок</th>
-            <th>Ссылка</th>
-            <th>Кол-во слов</th>
-            </thead>
-            <tbody>
-            @foreach($articles as $article)
-                <tr>
-                    <td>{{ $article->title }}</td>
-                    <td>
-                        <a href="http://ru.wikipedia.org/wiki/{{$article->title}}">http://ru.wikipedia.org/wiki/{{$article->title}}</a>
-                    </td>
-                    <td>{{ count($article->atoms) }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    @endif
+    <div id="app2">
+        <import-vue></import-vue>
     </div>
 </div>
 <div id="search-tab" style="display: none">
